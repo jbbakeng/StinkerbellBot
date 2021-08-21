@@ -1,1 +1,4 @@
 .idea/
+stinkerbellbot/.env
+poetry.lock
+stinkerbellbot/__pycache__/
