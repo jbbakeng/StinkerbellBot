@@ -22,11 +22,13 @@ class SillyButton(discord.ui.Button):
             try:
                 vc = await voice.channel.connect()
             except discord.errors.ClientException:
-                await interaction.response.send_message(f"Yo {interaction.user.name}, I'm busy, wait a bit and try again.")
+                await interaction.response.send_message(f"Yo {interaction.user.name}, "
+                                                        f"I'm busy, wait a bit and try again.")
                 return
 
             await interaction.response.defer()
-            vc.play(discord.FFmpegPCMAudio(executable=FFMPEG, source=f"./sounds/{self.sound_file}"))
+            audio_source = discord.FFmpegPCMAudio(executable=FFMPEG, source=f"./sounds/{self.sound_file}")
+            vc.play(audio_source)
 
             while vc.is_playing():
                 await asyncio.sleep(.1)
@@ -34,8 +36,6 @@ class SillyButton(discord.ui.Button):
         else:
             await interaction.response.send_message(f"Hey {interaction.user.name}, you need to be in a voice channel "
                                                     f"so I know where to play the sound!")
-        # Delete command after the audio is done playing.
-        # await context.message.delete()
 
 
 class SillyButtons(discord.ui.View):
