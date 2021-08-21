@@ -10,11 +10,19 @@ from sillybuttons import SillyButtons
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-bot = commands.Bot(command_prefix='!')
+
+class StinkerbellBot(commands.Bot):
+
+    def __init__(self):
+        super().__init__(command_prefix='!')
+
+
+bot = StinkerbellBot()
+
 
 @bot.command(name="sillybuttons")
 async def show_buttons(context: commands.Context):
-    view = SillyButtons()
+    view = SillyButtons(context=context)
     await context.send('Press to play a sound', view=view)
 
 
@@ -23,7 +31,7 @@ async def bot_join(context: commands.Context):
     voice = context.author.voice
     if voice is not None:
         try:
-            voice_channel = await voice.channel.connect(timeout=3600)
+            await voice.channel.connect(timeout=3600)
         except discord.errors.ClientException:
             await context.reply("I'm already here NOOB!")
             return
