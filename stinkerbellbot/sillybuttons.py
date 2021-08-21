@@ -10,10 +10,10 @@ load_dotenv()
 FFMPEG = os.getenv('FFMPEG')
 
 
-class CustomButton(discord.ui.Button):
+class SillyButton(discord.ui.Button):
 
     def __init__(self, row: int, label: str, sound_file: str):
-        super(CustomButton, self).__init__(label=label, row=row)
+        super(SillyButton, self).__init__(label=label, row=row)
         self.sound_file = sound_file
 
     async def callback(self, interaction: discord.Interaction):
@@ -26,7 +26,6 @@ class CustomButton(discord.ui.Button):
                 return
 
             await interaction.response.defer()
-            discord.PCMVolumeTransformer(vc, volume=0.1)
             vc.play(discord.FFmpegPCMAudio(executable=FFMPEG, source=f"./sounds/{self.sound_file}"))
 
             while vc.is_playing():
@@ -39,16 +38,16 @@ class CustomButton(discord.ui.Button):
         # await context.message.delete()
 
 
-class Buttons(discord.ui.View):
+class SillyButtons(discord.ui.View):
 
     def __init__(self):
-        super(Buttons, self).__init__(timeout=1800)
+        super(SillyButtons, self).__init__(timeout=1800)
 
         self.sounds_json = "./sounds/sounds.json"
         data = self.read_sounds_json()
 
         for sound in data['sounds']:
-            self.add_item(CustomButton(0, sound['label'], sound['file_name']))
+            self.add_item(SillyButton(0, sound['label'], sound['file_name']))
 
     def read_sounds_json(self):
         f = open(self.sounds_json, 'r')
