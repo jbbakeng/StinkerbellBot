@@ -3,6 +3,7 @@ import discord
 import json
 import os
 
+from itertools import islice
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -36,26 +37,48 @@ class SillyButton(discord.ui.Button):
                                                     f"so I know where to play the sound!")
 
 
-class SillyButtons(discord.ui.View):
+def read_sounds_json():
+    sounds_json = "./sounds/sounds.json"
+    f = open(file=sounds_json, mode='r', encoding='utf-8')
+    data = json.loads(f.read())
+    print(data)
+    f.close()
+
+    return data
+
+
+def split(data, n):
+    """Yield successive n-sized chunks from data."""
+    it = iter(data)
+    for i in range(0, len(data), n):
+        yield {k: data[k] for k in islice(it, n)}
+
+
+class SillyButtonsView(discord.ui.View):
 
     def __init__(self, context: commands.Context):
-        super(SillyButtons, self).__init__(timeout=1800)
+        super(SillyButtonsView, self).__init__(timeout=1800)
+        self.context = context
 
-        self.sounds_json = "./sounds/sounds.json"
-        data = self.read_sounds_json()
-
+    def add_buttons(self, buttons: str):
         row = 0
-        for k, sound in enumerate(data['sounds']):
+        for k, sound in enumerate(buttons):
             if k % 5 == 4:
-                row+=1
+                row += 1
             if row >= 5:
                 return
-            self.add_item(SillyButton(row, sound, context))
+            self.add_item(SillyButton(row, sound, self.context))
 
-    def read_sounds_json(self):
-        f = open(file=self.sounds_json, mode='r', encoding='utf-8')
-        data = json.loads(f.read())
-        print(data)
-        f.close()
 
-        return data
+def create_SillyButtonsViews(context: commands.Context) -> [SillyButtonsView]:
+    views = []
+
+    sounds = read_sounds_json()['sounds']
+    button_chunks = [sounds[x:x + 25] for x in range(0, len(sounds), 25)]
+
+    for row, button_chunk in enumerate(button_chunks):
+        view = SillyButtonsView(context)
+        view.add_buttons(button_chunk)
+        views.append(view)
+
+    return views
