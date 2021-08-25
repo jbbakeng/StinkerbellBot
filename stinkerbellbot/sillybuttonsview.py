@@ -41,7 +41,6 @@ def read_sounds_json():
     sounds_json = "./sounds/sounds.json"
     f = open(file=sounds_json, mode='r', encoding='utf-8')
     data = json.loads(f.read())
-    print(data)
     f.close()
 
     return data
@@ -61,16 +60,16 @@ class SillyButtonsView(discord.ui.View):
         self.context = context
 
     def add_buttons(self, buttons: str):
-        row = 0
+        row = -1
         for k, sound in enumerate(buttons):
-            if k % 5 == 4:
+            if k % 5 == 0:
                 row += 1
             if row >= 5:
                 return
             self.add_item(SillyButton(row, sound, self.context))
 
 
-def create_SillyButtonsViews(context: commands.Context) -> [SillyButtonsView]:
+def create_sillybuttonsviews(context: commands.Context) -> [SillyButtonsView]:
     views = []
 
     sounds = read_sounds_json()['sounds']

@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from sillybuttonsview import SillyButtonsView, create_SillyButtonsViews
+from sillybuttonsview import SillyButtonsView, create_sillybuttonsviews
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -22,7 +22,7 @@ bot = StinkerbellBot()
 
 @bot.command(name="sillybuttons")
 async def show_buttons(context: commands.Context):
-    views = create_SillyButtonsViews(context)
+    views = create_sillybuttonsviews(context)
     for view in views:
         await context.send('Press to play a sound', view=view)
 
