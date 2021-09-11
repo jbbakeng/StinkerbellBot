@@ -1,5 +1,6 @@
 StinkerbellBot
 ================
+[![GitHub pages](https://github.com/jbbakeng/StinkerbellBot/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/jbbakeng/StinkerbellBot/actions/workflows/pages.yml)
 
 A friendly [discord](https://discord.com/) bot that adds a little fun to you server.
 
