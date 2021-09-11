@@ -1,17 +1,23 @@
-# bot.py
+"""
+bot.py
+====================================
+The core module
+"""
+
 import os
 
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-from sillybuttonsview import SillyButtonsView, create_sillybuttonsviews
+from stinkerbellbot.sillybuttonsview import create_sillybuttonsviews
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
 class StinkerbellBot(commands.Bot):
+    """The StinkerbellBot itself"""
 
     def __init__(self):
         super().__init__(command_prefix='!')
@@ -22,6 +28,7 @@ bot = StinkerbellBot()
 
 @bot.command(name="sillybuttons")
 async def show_buttons(context: commands.Context):
+    """show_buttons"""
     views = create_sillybuttonsviews(context)
     for view in views:
         await context.send('Press to play a sound', view=view)
@@ -29,6 +36,7 @@ async def show_buttons(context: commands.Context):
 
 @bot.command(name="join")
 async def bot_join(context: commands.Context):
+    """bot_join"""
     voice = context.author.voice
     if voice is not None:
         try:
@@ -43,6 +51,7 @@ async def bot_join(context: commands.Context):
 
 @bot.command(name="leave")
 async def bot_leave(context: commands.Context):
+    """leave"""
     voice_client = discord.utils.get(context.bot.voice_clients, guild=context.guild)
     if voice_client.is_connected():
         await voice_client.disconnect()

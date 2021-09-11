@@ -2,3 +2,5 @@
 stinkerbellbot/.env
 poetry.lock
 stinkerbellbot/__pycache__/
+docs/build
+dist

@@ -13,13 +13,16 @@ FFMPEG = os.getenv('FFMPEG')
 
 
 class SillyButton(discord.ui.Button):
+    """A button able to play a connected sound"""
 
     def __init__(self, row: int, json: str, context: commands.Context):
+        """init"""
         super(SillyButton, self).__init__(label=json['label'], row=row)
         self.context = context
         self.json = json
 
     async def callback(self, interaction: discord.Interaction):
+        """Callback"""
         voice_client = discord.utils.get(self.context.bot.voice_clients, guild=self.context.guild)
         if voice_client.is_connected():
             await interaction.response.defer()
@@ -38,6 +41,7 @@ class SillyButton(discord.ui.Button):
 
 
 def read_sounds_json():
+    """read_sounds_json"""
     sounds_json = "./sounds/sounds.json"
     f = open(file=sounds_json, mode='r', encoding='utf-8')
     data = json.loads(f.read())
@@ -54,12 +58,15 @@ def split(data, n):
 
 
 class SillyButtonsView(discord.ui.View):
+    """A view containing up to 25 silly buttons"""
 
     def __init__(self, context: commands.Context):
+        """init"""
         super(SillyButtonsView, self).__init__(timeout=1800)
         self.context = context
 
     def add_buttons(self, buttons: str):
+        """add_buttons"""
         row = -1
         for k, sound in enumerate(buttons):
             if k % 5 == 0:
@@ -69,7 +76,8 @@ class SillyButtonsView(discord.ui.View):
             self.add_item(SillyButton(row, sound, self.context))
 
 
-def create_sillybuttonsviews(context: commands.Context) -> [SillyButtonsView]:
+def create_sillybuttonsviews(context: commands.Context) -> []:
+    """create_sillybuttonsviews"""
     views = []
 
     sounds = read_sounds_json()['sounds']
