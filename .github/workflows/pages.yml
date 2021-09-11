@@ -1,0 +1,32 @@
+name: GitHub pages
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout origin/main to main/
+      uses: actions/checkout@v2
+      with:
+        path: main
+
+    - name: Checkout origin/gh-pages to gh-pages/
+      uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Install Poetry
+      run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/main/get-poetry.py | python -
+
+    - name: Build and publish page
+      run: |
+        git -C gh-pages config user.name $GITHUB_ACTOR
+        git -C gh-pages config user.email "$GITHUB_ACTOR@bots.github.com"
+        cd main
+        .github/workflows/pages.sh . gh-pages/
