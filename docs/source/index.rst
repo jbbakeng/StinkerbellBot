@@ -7,12 +7,17 @@ Welcome to StinkerbellBot's documentation!
 ==========================================
 
 .. toctree::
+   :caption: Welcome
+
+   getting_started
+   installation
+   development
+
+.. toctree::
    :maxdepth: 2
    :caption: Contents:
-
 .. automodule:: stinkerbellbot.bot
    :members:
-
 .. automodule:: stinkerbellbot.sillybuttonsview
    :members:
 
