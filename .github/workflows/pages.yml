@@ -3,17 +3,17 @@ name: GitHub pages
 on:
   push:
     branches:
-    - main
+    - master
 
 jobs:
   build:
     name: Build and publish
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout origin/main to main/
+    - name: Checkout origin/master to master/
       uses: actions/checkout@v2
       with:
-        path: main
+        path: master
 
     - name: Checkout origin/gh-pages to gh-pages/
       uses: actions/checkout@v2
@@ -28,5 +28,5 @@ jobs:
       run: |
         git -C gh-pages config user.name $GITHUB_ACTOR
         git -C gh-pages config user.email "$GITHUB_ACTOR@bots.github.com"
-        cd main
+        cd master
         .github/workflows/pages.sh . gh-pages/
