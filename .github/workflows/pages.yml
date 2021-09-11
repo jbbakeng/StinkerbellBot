@@ -22,7 +22,7 @@ jobs:
         path: gh-pages
 
     - name: Install Poetry
-      run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/main/get-poetry.py | python -
+      run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
     - name: Build and publish page
       run: |
