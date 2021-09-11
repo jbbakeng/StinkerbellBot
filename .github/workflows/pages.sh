@@ -41,3 +41,4 @@ touch "$pages_dir/.nojekyll"
 git -C "$pages_dir" add --all
 git -C "$pages_dir" commit -m "Update GitHub pages" --allow-empty
 git -C "$pages_dir" push
+
