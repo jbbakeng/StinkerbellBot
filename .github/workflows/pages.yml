@@ -5,6 +5,8 @@ on:
     branches:
     - master
 
+  workflow_dispatch:
+
 jobs:
   build:
     name: Build and publish
@@ -28,4 +30,4 @@ jobs:
       run: |
         git -C gh-pages config user.name $GITHUB_ACTOR
         git -C gh-pages config user.email "$GITHUB_ACTOR@bots.github.com"
-        ./master/github/workflows/pages.sh . gh-pages/
+        ./master/.github/workflows/pages.sh master/ gh-pages/
