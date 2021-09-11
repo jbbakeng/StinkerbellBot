@@ -12,4 +12,5 @@ It is a *self-hosted bot* meaning you will need to host and maintain your own in
 
 ### Links
 
+[Documentation](https://jbbakeng.github.io/StinkerbellBot/)
 [Discord API](https://discordpy.readthedocs.io/en/latest/api.html)
