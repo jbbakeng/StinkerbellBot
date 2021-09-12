@@ -24,9 +24,11 @@ class StinkerbellBot(commands.Bot):
         self.default_txt_channel = 'command-me'
         self.default_category = 'StinkerbellBot'
 
+    @classmethod
     def get_bot_text_channel(self, guild):
         return discord.utils.get(guild.channels, name=bot.default_txt_channel)
 
+    @classmethod
     def get_bot_channel_category(self, guild):
         return discord.utils.get(guild.categories, name=bot.default_category)
 
