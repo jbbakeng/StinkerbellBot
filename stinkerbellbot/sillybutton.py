@@ -39,8 +39,11 @@ class SillyButton(ui.Button):
             # Try to play the sound,
             # if a sound is already playing or it cannot be played the bot will notify the user
             try:
-                audio_source = FFmpegPCMAudio(executable=FFMPEG, source=f"./sounds/{self.json['file_name']}")
-                voice_client.play(audio_source)
+                if voice_client.is_playing():
+                    voice_client.stop()
+                else:
+                    audio_source = FFmpegPCMAudio(executable=FFMPEG, source=f"./sounds/{self.json['file_name']}")
+                    voice_client.play(audio_source)
             except errors.ClientException:
                 await self.context.reply(f"Yo {interaction.user.name}, "
                                          f"I'm busy, wait a bit and try again.")
