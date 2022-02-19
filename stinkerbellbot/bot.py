@@ -20,7 +20,11 @@ class StinkerbellBot(commands.Bot):
     """The StinkerbellBot itself! Bow gracefully!"""
 
     def __init__(self):
-        super().__init__(command_prefix='!')
+        description = """The StinkerbellBot itself! Bow gracefully!"""
+
+        super().__init__(command_prefix='!',
+                         intents=discord.Intents.all(),
+                         description=description)
         self.default_txt_channel = 'command-me'
         self.default_category = 'StinkerbellBot'
 
